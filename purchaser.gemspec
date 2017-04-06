@@ -9,9 +9,9 @@ Gem::Specification.new do |s|
   s.version     = Purchaser::VERSION
   s.authors     = ["InvaQ"]
   s.email       = ["freerest02@gmail.com"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of Purchaser."
-  s.description = "TODO: Description of Purchaser."
+  s.homepage    = "https://github.com/invaq"
+  s.summary     = "ShoppingPurchase"
+  s.description = "Description of Purchaser."
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
