@@ -7,7 +7,7 @@ class CreatePurchaserAddresses < ActiveRecord::Migration[5.0]
       t.string :first_name
       t.string :last_name
       t.string :address
-      t.references :purchaser_country, foreign_key: true
+      t.references :country
       t.string :city
       t.string :zip
       t.string :phone

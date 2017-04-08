@@ -2,12 +2,11 @@ module Purchaser
   class Order < ApplicationRecord
     include AASM
 
-    belongs_to :delivery, optional: true
-    has_one :credit_card, dependent: :destroy
-    has_one :coupon, dependent: :nullify
+    belongs_to :delivery, optional: true, class_name: 'Purchaser::Delivery'
+    has_one :credit_card, dependent: :destroy, class_name: 'Purchaser::CreditCard'
+    has_one :coupon, dependent: :nullify, class_name: 'Purchaser::Coupon'
+    has_many :line_items, dependent: :destroy, class_name: 'Purchaser::LineItem'
 
-    has_many :line_items, dependent: :destroy
-  end
 
   aasm column: :state, whiny_transitions: false do
     state :creating, initial: true
@@ -56,39 +55,40 @@ module Purchaser
     current_item
   end
 
-  def delivery_selected?(from_list)
-    delivery.id == from_list if delivery
-  end
-
-  def amount_of_books
-    line_items.sum('quantity')
-  end
-
-  def subtotal_cart_price
-    line_items.inject(0) do |sum, line|
-      sum + line.total_price
+    def delivery_selected?(from_list)
+      delivery.id == from_list if delivery
     end
-  end
 
-  def coupon_cost
-    coupon ? subtotal_cart_price * coupon.discount/100 : 0.00
-  end
+    def amount_of_books
+      line_items.sum('quantity')
+    end
 
-  def delivry_cost
-    delivery ? delivery.price : 0.00
-  end
+    def subtotal_cart_price
+      line_items.inject(0) do |sum, line|
+        sum + line.total_price
+      end
+    end
 
-  def total_cart_price
-    subtotal_cart_price - coupon_cost + delivry_cost
-  end
+    def coupon_cost
+      coupon ? subtotal_cart_price * coupon.discount/100 : 0.00
+    end
 
-  def generate_number
-    '#R00' + id.to_s
-  end
+    def delivry_cost
+      delivery ? delivery.price : 0.00
+    end
 
-  def ordered_at
-    created_at.strftime('%B %d, %Y')
-  end
+    def total_cart_price
+      subtotal_cart_price - coupon_cost + delivry_cost
+    end
 
+    def generate_number
+      '#R00' + id.to_s
+    end
+
+    def ordered_at
+      created_at.strftime('%B %d, %Y')
+    end
+
+    end
   end
 end
