@@ -14,5 +14,8 @@ module Purchaser
   # def self.table_name_prefix
   #   "prurch_"
   # end
+  def self.setup
+    yield self
+  end
 
 end

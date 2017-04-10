@@ -5,6 +5,13 @@ module Purchaser
 
     protected
     
+    def set_order
+    @order = Order.find(session[:order_id])
+  rescue ActiveRecord::RecordNotFound
+    @order = Order.create
+    session[:order_id] = @order.id
+    @order
+  end
 
   end
 end

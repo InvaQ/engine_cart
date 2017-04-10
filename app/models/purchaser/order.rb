@@ -2,11 +2,15 @@ module Purchaser
   class Order < ApplicationRecord
     include AASM
 
+    belongs_to :person, optional: true, polymorphic: true
     belongs_to :delivery, optional: true, class_name: 'Purchaser::Delivery'
     has_one :credit_card, dependent: :destroy, class_name: 'Purchaser::CreditCard'
     has_one :coupon, dependent: :nullify, class_name: 'Purchaser::Coupon'
     has_many :line_items, dependent: :destroy, class_name: 'Purchaser::LineItem'
 
+    has_one :shipping_address, as: :addressable, dependent: :destroy
+    has_one :billing_address, as: :addressable, dependent: :destroy
+  
 
   aasm column: :state, whiny_transitions: false do
     state :creating, initial: true
@@ -43,6 +47,7 @@ module Purchaser
     event :canceling do
       transitions from: [ :creating, :steps, :complete, :confirm, :complete, :in_transit ], to: :canceled
     end
+  end
 
     def add_book(book_id, quantity)
     current_item = line_items.find_by(book_id: book_id)
@@ -89,6 +94,6 @@ module Purchaser
       created_at.strftime('%B %d, %Y')
     end
 
-    end
+ 
   end
 end

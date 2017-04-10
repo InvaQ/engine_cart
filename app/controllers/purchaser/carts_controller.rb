@@ -5,7 +5,8 @@ module Purchaser
     include Rectify::ControllerHelpers
     
     def show
-      present OrderSummaryPresenter.new(order: @order)
+      binding.pry
+      present Purchaser::OrderSummaryPresenter.new(order: @order)
     end
 
     def update

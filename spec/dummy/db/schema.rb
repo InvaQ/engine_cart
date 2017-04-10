@@ -10,10 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170406184222) do
+ActiveRecord::Schema.define(version: 20170410140436) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "cars", force: :cascade do |t|
+    t.string   "name"
+    t.decimal  "price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.string   "name"
+    t.decimal  "price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "purchaser_addresses", force: :cascade do |t|
     t.string   "addressable_type"
@@ -72,22 +86,35 @@ ActiveRecord::Schema.define(version: 20170406184222) do
   end
 
   create_table "purchaser_line_items", force: :cascade do |t|
-    t.integer  "quantity",                           default: 1
-    t.decimal  "price",      precision: 8, scale: 2
+    t.string   "product_type"
+    t.integer  "product_id"
+    t.integer  "quantity",                             default: 1
+    t.decimal  "price",        precision: 8, scale: 2
     t.integer  "order_id"
-    t.datetime "created_at",                                     null: false
-    t.datetime "updated_at",                                     null: false
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
     t.index ["order_id"], name: "index_purchaser_line_items_on_order_id", using: :btree
+    t.index ["product_type", "product_id"], name: "index_purchaser_line_items_on_product_type_and_product_id", using: :btree
   end
 
   create_table "purchaser_orders", force: :cascade do |t|
+    t.string   "person_type"
+    t.integer  "person_id"
     t.string   "state"
-    t.integer  "user_id"
     t.decimal  "total_price", precision: 10, scale: 2
     t.integer  "delivery_id"
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
     t.index ["delivery_id"], name: "index_purchaser_orders_on_delivery_id", using: :btree
+    t.index ["person_type", "person_id"], name: "index_purchaser_orders_on_person_type_and_person_id", using: :btree
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

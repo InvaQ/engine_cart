@@ -10,4 +10,24 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require jquery
+//= require jquery_ujs
+//= require turbolinks
 //= require_tree .
+
+function incrementVal() {
+	$(document).ready(function () {
+  number = $('#form_quantity').val();
+  number++;
+  $('#form_quantity').val(number);
+    })
+}
+
+function decrementVal() {
+  $(document).ready(function () {
+  number = $('#form_quantity').val();
+  if (number > 1) { number--; }
+  
+  $('#form_quantity').val(number);
+    })
+}
