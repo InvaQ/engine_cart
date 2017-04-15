@@ -1,5 +1,5 @@
 module Purchaser
-  module Checkout
+  module Checkouts
     class StepDelivery < Rectify::Command
 
       def initialize(params, object)
@@ -17,7 +17,7 @@ module Purchaser
       def add_delivery
         @order.assign_attributes(delivery_id: @params)
         @order.total_price = @order.total_cart_price
-        @order.user_id = current_user.id  unless @order.user_id
+        @order.person = current_customer unless @order.person_id
         @order.save
       end
 

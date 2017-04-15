@@ -23,7 +23,7 @@
       %p.general-address.mb-30=@complete_presenter.show_order_date
   .visible-xs
   .hidden-xs.divider-lg.pt-20
-    =render 'carts/table', line_items: @complete_presenter.line_items
+    =render '/purchaser/carts/table', line_items: @complete_presenter.line_items
   = render '/purchaser/shared/order_summary'
   .text-center
-    =link_to 'Back to Store', root_path, class: 'btn btn-default mb-20'
+    =link_to 'Back to Store', main_app.root_path, class: 'btn btn-default mb-20'

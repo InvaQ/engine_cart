@@ -49,13 +49,13 @@ module Purchaser
     end
   end
 
-    def add_book(book_id, quantity)
-    current_item = line_items.find_by(book_id: book_id)
+    def add_product(product_id, type, quantity)
+    current_item = line_items.find_by(product_id: product_id, product_type: type)
     if current_item
       current_item.quantity += quantity.to_i
     else
-      current_item = line_items.build(book_id: book_id, quantity: quantity)
-      current_item.price = current_item.book.price
+      current_item = line_items.build(product_id: product_id, product_type: type, quantity: quantity)
+      current_item.price = current_item.product.price
     end
     current_item
   end

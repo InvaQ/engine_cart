@@ -8,7 +8,7 @@ module Purchaser
     end
 
     def show_confirmation_detail
-      'An order confirmation has been has been sent to ' + order.user.email
+      "An order confirmation has been has been sent to #{get_email}"
     end
 
     def show_order_date
@@ -37,6 +37,15 @@ module Purchaser
 
     def line_items
       order.line_items
+    end
+
+
+    def get_email
+      if order.person.respond_to?(:email)
+        order.person.email
+      else
+        ' '
+      end
     end
     
   end

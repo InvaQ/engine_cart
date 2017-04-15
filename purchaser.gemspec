@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.executables = s.files.grep(%r{^bin/}) { |f| File.basename(f) }
   s.test_files = Dir["spec/`/*"]
 
-  s.add_dependency "rails", " 5.0.1"
+  s.add_dependency "rails"
 
   #logic
   s.add_dependency 'rectify'
@@ -32,6 +32,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'jquery-rails'
   s.add_dependency 'coffee-rails'
   s.add_dependency 'turbolinks'
+  s.add_dependency 'uglifier'
   #test
   s.add_development_dependency 'pry-byebug'
   s.add_development_dependency 'pry-rails'

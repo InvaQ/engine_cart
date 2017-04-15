@@ -7,7 +7,7 @@ module Purchaser
     validates :discount, numericality: { greater_than_or_equal_to: 0,
                             less_than_or_equal_to: 99 }
     def already_activated?
-    order_id.present?
-  end
+      order_id.present?
+    end
   end
 end

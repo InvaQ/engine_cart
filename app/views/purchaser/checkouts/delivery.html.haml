@@ -4,7 +4,7 @@
   .visible-xs
   = form_tag checkout_path, class: 'delivery_form', method: :patch do
     .hidden-xs.mb-res-50
-      = render 'deliveries/deliveries_md', deliveries: @order
+      = render '/purchaser/shared/deliveries_md', deliveries: @order
     
       = render '/purchaser/shared/order_summary'
     .col-md-12.mb-40

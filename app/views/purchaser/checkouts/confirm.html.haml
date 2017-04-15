@@ -43,7 +43,7 @@
         = @order.credit_card.expiry_year
   .visible-xs
   .hidden-xs.divider-lg.pt-20
-    =render 'carts/table', line_items: @order.line_items
+    =render '/purchaser/carts/table', line_items: @order.line_items
   = render '/purchaser/shared/order_summary'
   .text-center
     = button_to 'Place order', checkout_path, method: :patch, params: {place_order: true }, class: 'btn btn-default mb-20'

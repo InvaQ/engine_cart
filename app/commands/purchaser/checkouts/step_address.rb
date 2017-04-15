@@ -1,5 +1,5 @@
 module Purchaser
-  module Checkout
+  module Checkouts
     class StepAddress < Rectify::Command
 
       def initialize(params, object)
@@ -21,9 +21,9 @@ module Purchaser
       attr_reader :params
 
       def change_address
-        ShippingAddress.find_or_create_by({ addressable_type: 'Order', addressable_id: @order.id })
+        ShippingAddress.find_or_create_by({ addressable_type: 'Purchaser::Order', addressable_id: @order.id })
         .update(@shipping_params.attributes)
-        BillingAddress.find_or_create_by({ addressable_type: 'Order', addressable_id: @order.id })
+        BillingAddress.find_or_create_by({ addressable_type: 'Purchaser::Order', addressable_id: @order.id })
         .update(@billing_params.attributes)    
       end
 

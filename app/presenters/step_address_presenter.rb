@@ -10,6 +10,7 @@ module Purchaser
 
 
     def billing
+
       @billing ||= priority_address('billing')
     end
 
@@ -19,7 +20,7 @@ module Purchaser
     private
 
     def priority_address(type)
-      @order.public_send("#{type}_address") || @user.public_send("#{type}_address") || "#{type.capitalize}Address".constantize.new
+      @order.send("#{type}_address") || @user.send("#{type}_address") || "Purchaser::#{type.capitalize}Address".constantize.new
     end
 
   end

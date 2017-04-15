@@ -27,7 +27,7 @@ module Purchaser
 
 
     def form_invalid?
-      @form = CouponForm.from_params(params)
+      @form = CouponForm.from_params(coupon_params)
       @form.invalid?        
     end
 

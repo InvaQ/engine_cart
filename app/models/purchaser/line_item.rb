@@ -4,7 +4,7 @@ module Purchaser
     belongs_to :product, polymorphic: true
 
     def total_price
-      book.price * quantity
+      product.price * quantity
     end
   end
 end

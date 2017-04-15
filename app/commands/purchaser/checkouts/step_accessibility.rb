@@ -1,5 +1,5 @@
 module Purchaser
-  module Checkout
+  module Checkouts
     class StepAccessibility < Rectify::Command
 
       def initialize(step, object)

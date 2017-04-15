@@ -12,6 +12,11 @@ module Purchaser
       end
 
       def act_as_product
+        
+        define_method :product_type do
+          self.class.to_s
+        end
+
         has_many :line_items, class_name: 'Purchaser::LineItem', as: :product
       end
 

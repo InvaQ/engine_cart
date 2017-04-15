@@ -1,4 +1,5 @@
 require_relative 'model_mixin'
+require_relative 'controller_mixin'
 module Purchaser
   class Engine < ::Rails::Engine
     isolate_namespace Purchaser
@@ -26,4 +27,9 @@ module Purchaser
   ActiveSupport.on_load :active_record do
     ActiveRecord::Base.include(Purchaser::ModelMixin)
   end
+
+  ActiveSupport.on_load(:action_controller) do
+    ActionController::Base.include(Purchaser::ControllerMixin)
+  end
+
 end

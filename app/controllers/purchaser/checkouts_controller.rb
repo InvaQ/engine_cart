@@ -4,6 +4,7 @@ module Purchaser
     include Wicked::Wizard
     include Rectify::ControllerHelpers 
     steps :address, :delivery, :payment, :confirm, :complete
+    before_action :authenticate_user! if defined? Devise
     before_action :set_countries, :set_steps
     before_action :check_accessibility, only: :show
 
@@ -16,7 +17,7 @@ module Purchaser
 
     def update
 
-      "Step#{step.capitalize}".constantize.call(params, @order) do
+      "Purchaser::Checkouts::Step#{step.capitalize}".constantize.call(params, @order) do
         on(:ok) { redirect_to next_wizard_path }
         on(:invalid) do |*attrs|  
           render_with_presenters(@order, *attrs)
@@ -27,7 +28,7 @@ module Purchaser
     private
 
       def set_countries
-        @countries = Country.select(:id, :name)
+        @countries = Purchaser::Country.select(:id, :name)
       end
 
       def set_forms
@@ -37,7 +38,7 @@ module Purchaser
       end
 
       def priority_address(type)
-        @order.public_send(type).nil? ? current_user.public_send(type) : @order.public_send(type)
+        @order.public_send(type).nil? ? current_customer.public_send(type) : @order.public_send(type)
       end
 
       def set_steps
@@ -45,7 +46,7 @@ module Purchaser
       end  
 
       def check_accessibility
-        StepAccessibility.call(step, @order) do
+        Purchaser::Checkouts::StepAccessibility.call(step, @order) do
           on(:wrong_url){ render_with_presenters(step: :complete) }
           on(:ok) {  render_with_presenters(@order) }
           on(:empty_cart) { redirect_to cart_path }
@@ -55,12 +56,11 @@ module Purchaser
       end
 
       def render_with_presenters(*attrs)
-      
         case step
-          when :address then @address_presenter = StepAddressPresenter.new(current_user, *attrs )
-          when :confirm then @confirm_presenter = ConfirmPresenter.new(order: @order).attach_controller(self)
-          when :payment then @payment_presenter = PaymentPresenter.new(*attrs)
-          when :complete then@complete_presenter = CompletePresenter.new(order: @order).attach_controller(self)
+          when :address then @address_presenter = StepAddressPresenter.new(current_customer, *attrs )
+          when :confirm then @confirm_presenter = Purchaser::ConfirmPresenter.new(order: @order).attach_controller(self)
+          when :payment then @payment_presenter = Purchaser::PaymentPresenter.new(*attrs)
+          when :complete then@complete_presenter = Purchaser::CompletePresenter.new(order: @order).attach_controller(self)
         end
 
         present OrderSummaryPresenter.new(order: @order)
@@ -77,5 +77,7 @@ module Purchaser
       def complete?
         @order.complete?
       end
+
+      
   end
 end

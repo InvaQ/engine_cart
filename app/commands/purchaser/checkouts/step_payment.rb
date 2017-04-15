@@ -1,5 +1,5 @@
 module Purchaser
-  module Checkout
+  module Checkouts
     class StepPayment < Rectify::Command
 
     def initialize(params, object)

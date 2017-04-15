@@ -1,5 +1,5 @@
 module Purchaser
-  module Checkout
+  module Checkouts
     class StepConfirm < Rectify::Command
 
       def initialize(params, object)
@@ -15,14 +15,14 @@ module Purchaser
     private
 
       def place_order
+        @order.created_at = Time.now
+        send_email if @order.person.respond_to?(:email)
         @order.place_order
-        @order.created_at = Time.now    
-        send_email 
         @order.save   
       end
 
       def send_email
-        ApplicationMailer.send_email(@order.user, @order)
+        ApplicationMailer.send_email(@order.person, @order)
       end
     end
   end

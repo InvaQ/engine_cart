@@ -9,7 +9,7 @@ module Purchaser
     private
 
     def current_coupon
-      Coupon.find_by_code(code)
+      Purchaser::Coupon.find_by_code(code)
     end
 
     def exist_coupon?
@@ -17,8 +17,9 @@ module Purchaser
     end
 
     def activated_coupon?
-      
+      return unless errors.blank?
       errors.add(:code, "is out of date") if current_coupon.already_activated?
     end
+
   end
 end
