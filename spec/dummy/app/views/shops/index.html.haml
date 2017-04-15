@@ -1,0 +1,22 @@
+%main.container
+  %h1.general-title-margin Сatalog
+  .mb-120
+    .row.pagination
+      - @products.each do |product|
+        .col-xs-6.col-sm-3
+          .general-thumb-wrap
+            .thumbnail.general-thumbnail
+              %img.img-shadow.general-thumbnail-img 
+                /= image_tag(book.main_picture)
+              .thumb-hover
+                .general-thumb-link-wrap
+                  =button_to 'add to cart', purchaser.create_line_item_path(id: product.id, type: product.product_type, quantity: '1'), method: :post, class: 'thumb-hover-link'
+                  /   %i.fa.fa-shopping-cart.thumb-icon
+
+          .general-thumb-info{"data-id" => product.id}
+            %p.general-title 
+              =product.name
+            %p.font-16.in-gold-500 
+              =number_to_currency(product.price)
+
+    =link_to 'Cart', purchaser.cart_path(id: session[:order_id])
