@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    purchaser (0.1.0)
+    purchaser (0.1.1)
       aasm
       bootstrap-sass
       coffee-rails
@@ -59,7 +59,7 @@ GEM
     addressable (2.5.1)
       public_suffix (~> 2.0, >= 2.0.2)
     arel (7.1.4)
-    autoprefixer-rails (6.7.7.1)
+    autoprefixer-rails (6.7.7.2)
       execjs
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
@@ -101,8 +101,8 @@ GEM
       factory_girl (~> 4.8.0)
       railties (>= 3.0.0)
     ffaker (2.5.0)
-    globalid (0.3.7)
-      activesupport (>= 4.1.0)
+    globalid (0.4.0)
+      activesupport (>= 4.2.0)
     haml (4.0.7)
       tilt
     i18n (0.8.1)

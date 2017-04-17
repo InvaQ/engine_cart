@@ -1,13 +1,14 @@
 module Purchaser
   class UpdateCoupon < Rectify::Command
 
-    def initialize(params, object)
+    def initialize(params, object, blank)
       @params = params
       @order = object
+      @blank = blank
     end
 
     def call
-      return false if dont_need_update
+      return false if dont_need_update || @blank
       use_coupon
     end  
 

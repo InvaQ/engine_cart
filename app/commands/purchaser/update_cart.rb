@@ -4,7 +4,7 @@ module Purchaser
     def initialize(params, object)
       @params = params
       @order = object
-      @update_coupon = UpdateCoupon.new(coupon_params, @order)
+      @update_coupon = UpdateCoupon.new(coupon_params, @order, coupon_blank?)
     end
 
     def call
