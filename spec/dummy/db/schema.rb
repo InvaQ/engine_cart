@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 20170410140436) do
   create_table "cars", force: :cascade do |t|
     t.string   "name"
     t.decimal  "price"
+    t.string   "image_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

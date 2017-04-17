@@ -7,7 +7,8 @@ module Purchaser
     has_one :credit_card, dependent: :destroy, class_name: 'Purchaser::CreditCard'
     has_one :coupon, dependent: :nullify, class_name: 'Purchaser::Coupon'
     has_many :line_items, dependent: :destroy, class_name: 'Purchaser::LineItem'
-
+    accepts_nested_attributes_for :line_items, allow_destroy: true
+    
     has_one :shipping_address, as: :addressable, dependent: :destroy
     has_one :billing_address, as: :addressable, dependent: :destroy
   
