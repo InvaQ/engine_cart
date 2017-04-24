@@ -1,25 +1,24 @@
 module Purchaser
   class UpdateCoupon < Rectify::Command
 
-    def initialize(params, object, blank)
+    def initialize(params, object, code_blank = true)
       @params = params
       @order = object
-      @blank = blank
+      @code_blank = code_blank
     end
 
     def call
-      return false if dont_need_update || @blank
-      use_coupon
+      use_coupon! if need_update?
     end  
 
     private
       attr_reader :params
 
-      def dont_need_update
-        @order.coupon == params[:code]
+      def need_update?
+        !@code_blank || @order.coupon&.code != params[:code]
       end
 
-      def use_coupon
+      def use_coupon!
         @order.coupon = Coupon.find_by_code(params[:code])
       end
 

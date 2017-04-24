@@ -1,10 +1,11 @@
 module Purchaser
   module Checkouts
     class StepAccessibility < Rectify::Command
-
+ 
       def initialize(step, object)
         @step = step
         @order = object
+        #binding.pry
       end
 
       def call

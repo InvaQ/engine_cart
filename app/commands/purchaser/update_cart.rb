@@ -11,7 +11,7 @@ module Purchaser
       unless coupon_blank?
         return broadcast(:invalid, form) if form_invalid?
       end
-      action = params[:to_checkout] ? :to_checkout : :update_cart
+      action = define_action
       order.checkout if action == :to_checkout
       broadcast(action) if update_cart
     end
@@ -23,6 +23,10 @@ module Purchaser
       @update_coupon.call
       order.total_price = order.total_cart_price
       order.update_attributes(cart_params)
+    end
+
+    def define_action
+      params[:to_checkout] ? :to_checkout : :update_cart
     end
 
 

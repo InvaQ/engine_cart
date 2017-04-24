@@ -2,6 +2,6 @@ require 'rails_helper'
 
 module Purchaser
   RSpec.describe LineItem, type: :model do
-    pending "add some examples to (or delete) #{__FILE__}"
+    it { should belong_to(:order) }
   end
 end

@@ -1,6 +1,15 @@
 FactoryGirl.define do
   factory :order, class: 'Purchaser::Order' do
-    user_id nil
+    person_id nil
+    total_price 8.00
+
+    trait :completed do
+      after(:create) do |order|
+        order.state = 'complete'
+        order.save
+      end
+      
+    end
 
     trait :with_items do
       transient do
@@ -27,7 +36,7 @@ FactoryGirl.define do
 
     trait :with_coupon do
       after(:create) do |order|
-        order.coupon = create(:purchaser_coupon)
+        order.coupon = create(:coupon)
         order.save
       end
     end
@@ -35,7 +44,7 @@ FactoryGirl.define do
 
     trait :with_credit_card do
       after(:create) do |order|
-        order.credit_card = create(:purchaser_credit_card)
+        order.credit_card = create(:credit_card)
         order.save
       end
     end

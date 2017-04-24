@@ -2,6 +2,9 @@ require 'rails_helper'
 
 module Purchaser
   RSpec.describe Address, type: :model do
-    pending "add some examples to (or delete) #{__FILE__}"
+
+    describe 'Associations' do
+      it { should belong_to(:addressable) }
+    end
   end
 end

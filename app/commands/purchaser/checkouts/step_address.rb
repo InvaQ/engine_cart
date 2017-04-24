@@ -3,6 +3,7 @@ module Purchaser
     class StepAddress < Rectify::Command
 
       def initialize(params, object)
+        
         @params = params
         @use_billing = params[:use_billing]
         @order = object
@@ -13,7 +14,7 @@ module Purchaser
         check_billing_params
         @shipping_params = 
           use_billing? ? @billing_params.dup : @shipping_params
-        return broadcast(:invalid,  @billing_params, @shipping_params) if forms_valid?
+        return broadcast(:invalid,  @billing_params, @shipping_params) if forms_invalid?
         broadcast(:ok, @order) if change_address
       end
 
@@ -38,6 +39,7 @@ module Purchaser
 
       def check_billing_params
         @billing_params = AddressesForm.from_params(address_params[:billing])
+
       end
 
       def use_billing?
@@ -45,7 +47,7 @@ module Purchaser
         @use_billing == "on"
       end
 
-      def forms_valid?
+      def forms_invalid?
         @shipping_params.invalid? && @billing_params.invalid?
       end
 

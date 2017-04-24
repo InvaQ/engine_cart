@@ -2,16 +2,19 @@ require 'rails_helper'
 
 module Purchaser
   RSpec.describe UpdateCoupon do
-    let(:order) { create :order}
-    let(:params) { { code: "123" } }
-    #let(:update_coupon) { subject.new(params, order) }
-
+    let(:order) { create :order, :with_coupon}
+    let(:new_code) { { code: "1234" } }
+    let(:same_code) { { code: order.coupon.code } }
+    
     context 'update coupon' do
       it 'when dont need update' do
-        allow(subject).to receive(:new).with(params, order)
-        allow_any_instance_of(subject).to receive(:dont_need_update).and_return(false)
-          expect(update_coupon.call(params, order)).to eq(false)
+        expect(UpdateCoupon.new( same_code, order).call).to eq(nil)
       end
+
+      it ' when need update && doesnt have any coupon yet' do
+        expect(UpdateCoupon.new( new_code, order).call).to eq(order.coupon)
+      end
+  
     end
   end
 end

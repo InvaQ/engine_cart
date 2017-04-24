@@ -3,6 +3,7 @@ module Purchaser
     class StepDelivery < Rectify::Command
 
       def initialize(params, object)
+        #binding.pry
         @params = params[:delivery_id]
         @order = object
       end
